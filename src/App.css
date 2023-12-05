@@ -1,0 +1,7 @@
+.content-wrapper {
+    padding-top: 120px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
