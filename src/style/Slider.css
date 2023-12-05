@@ -1,0 +1,9 @@
+.slider-text {
+    font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+    .slider-text {
+        font-size: 11px;
+    }
+}
