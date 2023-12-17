@@ -16,6 +16,7 @@ const footerStyle = {
   color: "#fff",
   textAlign: "center",
   padding: "20px 0",
+  marginTop: "144px",
 };
 
 const innerFooterStyle = {
