@@ -15,13 +15,18 @@ const WinnerParty = ({ data }) => {
           Rekomendasi Sesuai Profil
         </h1>
       </div>
-      <div className="d-flex justify-content-center align-items-center">
-        <Image
-          src={`/src/assets/partai/${data[0]["singkatan"]}.png`}
-          alt={"result"}
-          className="images mb-3"
-          style={{ maxWidth: "200px", maxHeight: "200px" }}
-        />
+      <div className="d-flex justify-content-center align-items-center mb-3">
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ width: "200px", height: "200px" }}
+        >
+          <Image
+            src={`/src/assets/partai/${data[0]["singkatan"]}.png`}
+            alt={"result"}
+            className="images mb-3"
+            style={{ maxWidth: "200px", maxHeight: "200px" }}
+          />
+        </div>
       </div>
       <div className="d-flex justify-content-center">
         <h1
