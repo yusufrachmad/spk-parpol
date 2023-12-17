@@ -35,7 +35,7 @@ const Partai = () => {
   return (
     <div
       className="align-items-center"
-      style={{ height: "100vh", paddingTop: "160px" }}
+      style={{ minHeight: "100vh", paddingTop: "160px" }}
       id="partai"
     >
       <div className="d-flex justify-content-center mb-4 text-center">

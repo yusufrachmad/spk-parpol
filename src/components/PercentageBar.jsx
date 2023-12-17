@@ -6,7 +6,7 @@ const PercentageBar = ({ resultPerPartai }) => {
     <>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box sx={{ width: "70%", mr: 1, ml: 4 }}>
+          <Box sx={{ width: "80%", mr: 1, ml: 5 }}>
             <LinearProgress variant="determinate" value={resultPerPartai} />
           </Box>
           <Box sx={{ minWidth: 35 }}>

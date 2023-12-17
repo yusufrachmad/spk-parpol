@@ -2,6 +2,10 @@
     font-size: 14px;
 }
 
+.warning-slider {
+    border: 1px solid red;
+}
+
 @media screen and (max-width: 768px) {
     .slider-text {
         font-size: 11px;
