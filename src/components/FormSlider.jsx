@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import "../style/Slider.css";
 
-const FormSlider = ({ criteria, onChange }) => {
+const FormSlider = ({ criteria, subcriteria, onChange }) => {
   const [value, setValue] = useState(3);
   let step = 1;
   let maxText = "Sangat mempertimbangkan";
@@ -15,12 +15,12 @@ const FormSlider = ({ criteria, onChange }) => {
 
   useEffect(() => {
     setValue(3);
-    onChange(criteria, value);
+    onChange(subcriteria, value);
   }, []);
 
   const handleSliderChange = (_, newValue) => {
     setValue(newValue);
-    onChange(criteria, newValue);
+    onChange(subcriteria, newValue);
   };
 
   if (criteria.includes(" - ")) {

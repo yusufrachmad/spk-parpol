@@ -9,6 +9,8 @@ import { topsis } from "../../utils/topsis";
 const System = () => {
   const [sliderValues, setSliderValues] = useState([]);
   const [resultData, setResultData] = useState([]);
+  const [showWarning, setShowWarning] = useState(false);
+  const [warningIndex, setWarningIndex] = useState([]);
   const resultRef = useRef(null);
 
   const handleSliderChange = (criteria, value) => {
@@ -21,26 +23,50 @@ const System = () => {
   const handleValueWarning = (target) => {
     if (
       target[0] + target[1] === 10 ||
-      target[0] + target[1] === 1 ||
+      target[0] + target[1] === 2 ||
       target[5] + target[6] === 10 ||
-      target[5] + target[6] === 1 ||
+      target[5] + target[6] === 2 ||
       target[8] + target[9] === 10 ||
-      target[8] + target[9] === 1
+      target[8] + target[9] === 2
     ) {
-      alert("Nilai tidak boleh 0 atau 10");
       return true;
     }
 
     return false;
   };
 
-  const handleSubmit = async () => {
-    const target = Object.values(sliderValues);
-    if (handleValueWarning(target)) {
-      return;
+  const getWarningIndex = (target) => {
+    const warningIndex = [];
+
+    if (target[0] + target[1] === 10 || target[0] + target[1] === 2) {
+      warningIndex.push(0, 1);
     }
 
+    if (target[5] + target[6] === 10 || target[5] + target[6] === 2) {
+      warningIndex.push(5, 6);
+    }
+
+    if (target[8] + target[9] === 10 || target[8] + target[9] === 2) {
+      warningIndex.push(8, 9);
+    }
+
+    return warningIndex;
+  };
+
+  const handleSubmit = async () => {
+    // const target = Object.values(sliderValues);
+    const target = sliderValues;
+    // console.log(target);
+    // const warningIndex = getWarningIndex(target);
+
+    // if (handleValueWarning(target)) {
+    //   setWarningIndex(warningIndex);
+    //   setShowWarning(true);
+    //   return;
+    // }
+
     try {
+      // setShowWarning(false);
       const data = await topsis(target);
 
       if (data) {
@@ -62,7 +88,11 @@ const System = () => {
             Tentukan Pertimbanganmu
           </h1>
         </div>
-        <Form onChange={handleSliderChange} />
+        <Form
+          onChange={handleSliderChange}
+          setWarning={showWarning}
+          index={warningIndex}
+        />
         <div className="d-flex justify-content-center align-items-center mt-1 mb-3">
           <Button variant="outlined" size="medium" onClick={handleSubmit}>
             Submit
@@ -83,7 +113,7 @@ const System = () => {
               Hasil Perhitungan
             </h1>
           </div>
-          <Result result={resultData} />
+          <Result result={resultData} target={sliderValues} />
         </Container>
       )}
     </div>
