@@ -13,9 +13,9 @@ const ListOtherResult = ({ data }) => {
   };
 
   const showDefault = data
-    .filter((_, index) => isExpanded || index < 6)
+    .filter((_, index) => isExpanded || index < 5)
     .map((item, index) => (
-      <div className="mt-2" style={{ marginBottom: "5.6px" }} key={index}>
+      <div className="mt-2" style={{ marginBottom: "1.6px" }} key={index}>
         <div
           style={{
             display: "flex",
