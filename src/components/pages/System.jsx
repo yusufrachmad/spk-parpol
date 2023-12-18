@@ -5,9 +5,11 @@ import "../../style/System.css";
 import { Container } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import { topsis } from "../../utils/topsis";
+import { supabase } from "../../utils/supabaseClient.js";
 
 const System = () => {
   const [sliderValues, setSliderValues] = useState([]);
+  const [toShow, setToShow] = useState({});
   const [resultData, setResultData] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
   const [warningIndex, setWarningIndex] = useState([]);
@@ -55,15 +57,23 @@ const System = () => {
 
   const handleSubmit = async () => {
     // const target = Object.values(sliderValues);
+    const toShow = {};
     const target = sliderValues;
-    // console.log(target);
-    // const warningIndex = getWarningIndex(target);
+    const { data: subcriteria } = await supabase
+      .from("subkriteria")
+      .select("subkriteria, kode")
+      .order("id_subkriteria", { ascending: true });
 
-    // if (handleValueWarning(target)) {
-    //   setWarningIndex(warningIndex);
-    //   setShowWarning(true);
-    //   return;
-    // }
+    for (const index in target) {
+      if (subcriteria.find((item) => item.kode === index)) {
+        const result = subcriteria.find(
+          (item) => item.kode === index
+        ).subkriteria;
+        toShow[result] = target[index];
+      }
+    }
+
+    setToShow(toShow);
 
     try {
       // setShowWarning(false);
@@ -113,7 +123,7 @@ const System = () => {
               Hasil Perhitungan
             </h1>
           </div>
-          <Result result={resultData} target={sliderValues} />
+          <Result result={resultData} target={sliderValues} profile={toShow} />
         </Container>
       )}
     </div>
