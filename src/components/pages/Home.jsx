@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import NavigationBar from "../NavigationBar.jsx";
-import { Container } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import Partai from "./Partai.jsx";
 import "../../style/Home.css";
@@ -22,10 +22,26 @@ const Home = () => {
             >
               Sistem Pendukung Keputusan Pemilihan Partai dalam Pemilu 2024
             </h1>
-            <h5 style={{ fontFamily: "Open Sans" }}>
-              18 partai bersaing pada Pemilu 2024 untuk memperebutkan jatah
-              kursi pada lembaga Dewan Perwakilan Rakyat
-            </h5>
+            {/* <Card
+              className="d-flex justify-content-center align-items-center text-center"
+              style={{
+                borderRadius: "12px",
+                border: "none",
+              }}
+            >
+              <div className="d-flex justify-content-center align-items-center">
+                <h5
+                  style={{
+                    fontFamily: "Poppins",
+                    fontWeight: "600",
+                    fontSize: "14pt",
+                  }}
+                >
+                  Masih bingung memilih partai politik yang sesuai dengan
+                  keinginanmu? Cobain sistem ini sekarang juga!
+                </h5>
+              </div>
+            </Card> */}
             <Button
               className="mt-4"
               variant="contained"
