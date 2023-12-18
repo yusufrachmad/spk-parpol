@@ -11,6 +11,7 @@ const FeedbackSlider = ({ target, result }) => {
   const [value, setValue] = useState(3);
   const [open, setOpen] = useState(false);
   const [icon, setIcon] = useState(faChevronDown);
+  const [userHasSubmitted, setUserHasSubmitted] = useState(false);
   const [feedbackSliderValues, setFeedbackSliderValues] = useState([3, 3]);
   const feedbackObject = [
     {
@@ -28,6 +29,13 @@ const FeedbackSlider = ({ target, result }) => {
       maxText: "Sangat membantu",
     },
   ];
+
+  useEffect(() => {
+    const hasSubmitted = localStorage.getItem("userHasSubmitted");
+    if (hasSubmitted) {
+      setUserHasSubmitted(true);
+    }
+  }, []);
 
   const getDate = () => {
     const now = new Date();
@@ -55,20 +63,27 @@ const FeedbackSlider = ({ target, result }) => {
   }, []);
 
   const handleSubmit = async () => {
-    try {
-      const { error } = await supabase.from("feedback").insert({
-        id_feedback: getDate(),
-        target: JSON.stringify(Object.values(target)),
-        hasil: result[0]["nama_partai"],
-        terbantu: feedbackSliderValues[0],
-        cocok: feedbackSliderValues[1],
-      });
+    if (!userHasSubmitted) {
+      try {
+        const { error } = await supabase.from("feedback").insert({
+          id_feedback: getDate(),
+          target: JSON.stringify(Object.values(target)),
+          hasil: result[0]["nama_partai"],
+          terbantu: feedbackSliderValues[0],
+          cocok: feedbackSliderValues[1],
+        });
 
-      if (error) {
-        console.error(error);
+        if (error) {
+          console.error(error);
+        } else {
+          localStorage.setItem("userHasSubmitted", "true");
+          setUserHasSubmitted(true);
+        }
+      } catch (error) {
+        console.error("Error inserting data: ", error.message);
       }
-    } catch (error) {
-      console.error("Error inserting data: ", error.message);
+    } else {
+      alert("gimana si");
     }
   };
 
@@ -110,63 +125,75 @@ const FeedbackSlider = ({ target, result }) => {
       </StyledButton>
 
       <Collapse in={open}>
-        <div>
-          <Card.Body id="collapse" style={{ fontFamily: "Open Sans" }}>
-            {feedbackObject.map((item, index) => (
-              <div key={index}>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <label style={{ width: "fit-content", fontWeight: 600 }}>
-                    <p>{item.feedback}</p>
-                  </label>
-                </div>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: 600,
-                    }}
-                  >
-                    <Typography
-                      variant="body5"
-                      className="slider-text"
-                      style={{ marginLeft: item.marginLeft }}
-                    >
-                      {item.minText}
-                    </Typography>
-                    <Slider
-                      aria-label={item.feedback}
-                      defaultValue={3}
-                      value={feedbackSliderValues[index]}
-                      valueLabelDisplay="auto"
-                      step={1}
-                      min={1}
-                      max={5}
-                      color="primary"
-                      onChange={(_, newValue) => {
-                        handleSliderChange(_, newValue, index);
+        {!userHasSubmitted ? (
+          <div>
+            <Card.Body id="collapse" style={{ fontFamily: "Open Sans" }}>
+              {feedbackObject.map((item, index) => (
+                <div key={index}>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <label style={{ width: "fit-content", fontWeight: 600 }}>
+                      <p>{item.feedback}</p>
+                    </label>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: 600,
                       }}
-                      sx={{ flexGrow: 1, marginX: "20px" }}
-                    />
-                    <Typography
-                      variant="body5"
-                      className="slider-text"
-                      sx={{ marginRight: item.marginRight }}
                     >
-                      {item.maxText}
-                    </Typography>
-                  </Box>
+                      <Typography
+                        variant="body5"
+                        className="slider-text"
+                        style={{ marginLeft: item.marginLeft }}
+                      >
+                        {item.minText}
+                      </Typography>
+                      <Slider
+                        aria-label={item.feedback}
+                        defaultValue={3}
+                        value={feedbackSliderValues[index]}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        min={1}
+                        max={5}
+                        color="primary"
+                        onChange={(_, newValue) => {
+                          handleSliderChange(_, newValue, index);
+                        }}
+                        sx={{ flexGrow: 1, marginX: "20px" }}
+                      />
+                      <Typography
+                        variant="body5"
+                        className="slider-text"
+                        sx={{ marginRight: item.marginRight }}
+                      >
+                        {item.maxText}
+                      </Typography>
+                    </Box>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </Card.Body>
-          <div className="d-flex justify-content-center align-items-center mb-3">
-            <Button variant="contained" size="small" onClick={handleSubmit}>
-              Submit
-            </Button>
+              ))}
+            </Card.Body>
+            <div className="d-flex justify-content-center align-items-center mb-3">
+              <Button variant="contained" size="small" onClick={handleSubmit}>
+                Submit
+              </Button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div>
+            <Card.Body id="collapse" style={{ fontFamily: "Open Sans" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <label style={{ width: "fit-content", fontWeight: 600 }}>
+                  TERIMA KASIH SUDAH MEMBERI FEEDBACK!!!
+                </label>
+              </div>
+            </Card.Body>
+          </div>
+        )}
       </Collapse>
     </Card>
   );
