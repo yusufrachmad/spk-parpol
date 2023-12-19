@@ -2,6 +2,8 @@ import React from "react";
 import { Image } from "react-bootstrap";
 
 const WinnerParty = ({ data }) => {
+  const image = require(`../assets/partai/${data[0]["singkatan"]}.png`).default;
+
   return (
     <>
       <div className="d-flex justify-content-center mb-4 mt-3">
@@ -21,7 +23,7 @@ const WinnerParty = ({ data }) => {
           style={{ width: "200px", height: "200px" }}
         >
           <Image
-            src={`/src/assets/partai/${data[0]["singkatan"]}.png`}
+            src={image}
             alt={"result"}
             className="images mb-3"
             style={{ maxWidth: "200px", maxHeight: "200px" }}

@@ -6,6 +6,7 @@ import "../../style/Partai.css";
 const Partai = () => {
   const [dataPartai, setDataPartai] = useState([]);
   const [fetchError, setFetchError] = useState(null);
+  const [image, setImage] = useState([]);
 
   useEffect(() => {
     const getPartai = async () => {
@@ -32,6 +33,15 @@ const Partai = () => {
     getPartai();
   }, []);
 
+  const images = [];
+  for (const partai of dataPartai) {
+    images.push(require(`../../assets/partai/${partai.singkatan}.png`).default);
+  }
+
+  useEffect(() => {
+    setImage(images);
+  });
+
   return (
     <div
       className="align-items-center"
@@ -53,17 +63,13 @@ const Partai = () => {
       <Container className="d-flex align-items-center justify-content-center">
         <Card style={{ border: "none" }}>
           <Row>
-            {dataPartai.map((item, index) => (
+            {image.map((item, index) => (
               <Col lg={2} md={3} xs={4}>
                 <div className="d-flex justify-content-center" key={index}>
                   <Card className="partai-logo" style={{ border: "none" }}>
                     <Card.Body className="image-wrapper">
                       <Card.Title className="align-items-center">
-                        <Image
-                          src={`/src/assets/partai/${item.singkatan}.png`}
-                          alt={item.singkatan}
-                          className="logo-partai"
-                        />
+                        <Image src={item} alt={item} className="logo-partai" />
                       </Card.Title>
                     </Card.Body>
                   </Card>
