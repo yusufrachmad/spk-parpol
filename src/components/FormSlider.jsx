@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import SubcriteriaHelper from "./SubcriteriaHelper";
 import "../style/Slider.css";
 
-const FormSlider = ({ criteria, subcriteria, onChange }) => {
+const FormSlider = ({ criteria, subcriteria, deskripsi, onChange }) => {
   const [value, setValue] = useState(3);
   let step = 1;
   let maxText = "Sangat mempertimbangkan";
@@ -43,7 +44,12 @@ const FormSlider = ({ criteria, subcriteria, onChange }) => {
     <>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <label style={{ width: "fit-content", fontWeight: 600 }}>
-          <p>{criteria}</p>
+          <p>
+            {criteria}
+            <span style={{ paddingLeft: "8px" }}>
+              <SubcriteriaHelper deskripsi={deskripsi} />
+            </span>
+          </p>
         </label>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
