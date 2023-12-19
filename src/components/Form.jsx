@@ -3,7 +3,7 @@ import { supabase } from "../utils/supabaseClient";
 import FormSlider from "./FormSlider";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
-const Form = ({ onChange, setWarning, index }) => {
+const Form = ({ onChange }) => {
   const [subCriteria, setSubCriteria] = useState([]);
   const [lastSubCriteria, setLastSubCriteria] = useState([]);
 
@@ -12,7 +12,7 @@ const Form = ({ onChange, setWarning, index }) => {
       try {
         const { data: subcriteria, error } = await supabase
           .from("subkriteria")
-          .select("subkriteria, kode, kriteria(kode_kriteria)")
+          .select("subkriteria, kode, kriteria(kode_kriteria), deskripsi")
           .order("id_subkriteria", { ascending: true });
 
         if (subcriteria) {
@@ -27,28 +27,6 @@ const Form = ({ onChange, setWarning, index }) => {
     fetchData();
   }, []);
 
-  const checkWarningCondition = (warningIndex) => {
-    const redBorderIndices = [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-    ];
-
-    warningIndex.forEach((element) => {
-      redBorderIndices[element] = true;
-    });
-    return redBorderIndices;
-  };
-
-  const warningBorders = checkWarningCondition(index);
-
   return (
     <>
       <Container style={{ fontFamily: "Open Sans" }}>
@@ -56,18 +34,12 @@ const Form = ({ onChange, setWarning, index }) => {
           <Col>
             {subCriteria.map((item, index) => (
               <div className="mb-4" key={index}>
-                <Card
-                  style={{
-                    border:
-                      warningBorders[index] && setWarning
-                        ? "1px solid red"
-                        : "",
-                  }}
-                >
+                <Card>
                   <FormSlider
                     criteria={item.subkriteria}
                     subcriteria={item.kode}
                     onChange={onChange}
+                    deskripsi={item.deskripsi}
                   />
                 </Card>
               </div>
@@ -76,18 +48,12 @@ const Form = ({ onChange, setWarning, index }) => {
           <Col>
             {lastSubCriteria.map((item, index) => (
               <div className="mb-4" key={index}>
-                <Card
-                  style={{
-                    border:
-                      warningBorders[index + subCriteria.length] && setWarning
-                        ? "1px solid red"
-                        : "",
-                  }}
-                >
+                <Card>
                   <FormSlider
                     criteria={item.subkriteria}
                     subcriteria={item.kode}
                     onChange={onChange}
+                    deskripsi={item.deskripsi}
                   />
                 </Card>
               </div>
