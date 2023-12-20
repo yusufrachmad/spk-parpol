@@ -7,6 +7,28 @@ const Partai = () => {
   const [dataPartai, setDataPartai] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [image, setImage] = useState([]);
+  const [link, setLink] = useState([]);
+
+  const links = [
+    "https://www.bijakmemilih.id/partaiprofil/partai-kebangkitan-bangsa",
+    "https://www.bijakmemilih.id/partaiprofil/partai-gerakan-indonesia-raya",
+    "https://www.bijakmemilih.id/partaiprofil/partai-demokrasi-indonesia-perjuangan-(pdi-p)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-golongan-karya-(golkar)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-nasdem",
+    "https://www.bijakmemilih.id/partaiprofil/partai-buruh",
+    "https://www.bijakmemilih.id/partaiprofil/partai-gelombang-rakyat-indonesia",
+    "https://www.bijakmemilih.id/partaiprofil/partai-keadilan-sejahtera-(pks)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-kebangkitan-nusantara-(pkn)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-hati-nurani-rakyat",
+    "https://www.bijakmemilih.id/partaiprofil/partai-garda-perubahan-indonesia-(garuda)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-amanat-nasional-(pan)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-bulan-bintang-(pbb)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-demokrat",
+    "https://www.bijakmemilih.id/partaiprofil/partai-solidaritas-indonesia-(psi)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-perindo",
+    "https://www.bijakmemilih.id/partaiprofil/partai-persatuan-pembangunan-(ppp)",
+    "https://www.bijakmemilih.id/partaiprofil/partai-ummat-(pu)",
+  ];
 
   useEffect(() => {
     const getPartai = async () => {
@@ -40,6 +62,7 @@ const Partai = () => {
 
   useEffect(() => {
     setImage(images);
+    setLink(links);
   });
 
   return (
@@ -69,7 +92,13 @@ const Partai = () => {
                   <Card className="partai-logo" style={{ border: "none" }}>
                     <Card.Body className="image-wrapper">
                       <Card.Title className="align-items-center">
-                        <Image src={item} alt={item} className="logo-partai" />
+                        <a href={link[index]}>
+                          <Image
+                            src={item}
+                            alt={item}
+                            className="logo-partai"
+                          />
+                        </a>
                       </Card.Title>
                     </Card.Body>
                   </Card>
