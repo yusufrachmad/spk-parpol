@@ -69,8 +69,8 @@ const FeedbackSlider = ({ target, result }) => {
           id_feedback: getDate(),
           target: JSON.stringify(Object.values(target)),
           hasil: result[0]["nama_partai"],
-          terbantu: feedbackSliderValues[0],
-          cocok: feedbackSliderValues[1],
+          cocok: feedbackSliderValues[0],
+          terbantu: feedbackSliderValues[1],
         });
 
         if (error) {
@@ -131,7 +131,13 @@ const FeedbackSlider = ({ target, result }) => {
               {feedbackObject.map((item, index) => (
                 <div key={index}>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <label style={{ width: "fit-content", fontWeight: 600 }}>
+                    <label
+                      style={{
+                        width: "fit-content",
+                        fontWeight: 600,
+                        textAlign: "center",
+                      }}
+                    >
                       <p>{item.feedback}</p>
                     </label>
                   </div>
