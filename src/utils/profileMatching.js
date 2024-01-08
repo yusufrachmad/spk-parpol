@@ -3,45 +3,42 @@ import { supabase } from './supabaseClient.js';
 
 // Define a function to calculate the gap
 const calculateGap = (data, target) => {
-    // Initialize an empty array to store the gap
+    // Array kosong untuk menyimpan gap
     const gap = [];
 
-    // Initialize a variable to store the current profile id
+    // Variabel untuk menyimpan profil id
     let currentProfil = null;
 
-    // Initialize an empty object to store the gap for each profile
+    // Objek kosong untuk menyimpan data sementara
     let temp = {};
 
-    // Loop through the data array
     for (const profileData of data) {
-        // Check if the profile id is different from the current profile id
+        // Cek apakah profil id saat ini sama dengan index saat ini
         if (profileData.id_profil !== currentProfil) {
-            // If yes, check if the temp object is not empty
+            // Cek apakah objek temp tidak kosong
             if (Object.keys(temp).length > 0) {
-                // If yes, push the temp object to the gap array
+                // Masukkan objek temp ke array gap
                 gap.push(temp);
             }
-            // Reset the temp object to an empty object
             temp = {};
-            // Update the current profile id to the profile id of the current row
             currentProfil = profileData.id_profil;
         }
-        // Get the kode and value from the current row
+        // Ambil kode dan value dari profil data
         const { kode, value } = profileData;
-        // Calculate the result by subtracting the value from the target value
+        // Ambil gap dengan mengurangi value dengan profil preferensi
         const result = value - target[kode];
-        // Format the result to three decimal places
+        // Format hasil gap menjadi 3 angka di belakang koma
         const formattedResult = parseFloat(result.toFixed(3));
-        // Store the result in the temp object using the kode as the key
+        // Masukkan hasil gap ke objek temp
         temp[kode] = formattedResult;
     }
-    // After the loop, check if the temp object is not empty
+    // Cek apakah objek temp tidak kosong
     if (Object.keys(temp).length > 0) {
-        // If yes, push the temp object to the gap array
+        // Masukkan objek temp ke array gap
         gap.push(temp);
     }
 
-    // Return the gap array
+    // Return array gap
     return gap;
 };
 
