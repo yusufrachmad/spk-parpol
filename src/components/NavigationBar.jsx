@@ -42,11 +42,14 @@ const NavigationBar = () => {
 
   // Change logo based on whether it's the homepage or other pages
   const isHomepage = location.pathname === "/" || location.pathname === "/home";
+  const isLogin = location.pathname === "/login";
+  const isAdmin = location.pathname.startsWith("/adminpage");
   useEffect(() => {
     setImageLogo(isHomepage ? darkLogo : lightLogo);
   }, [isHomepage]);
 
   const navStyle = {
+    display: isLogin || isAdmin ? "none" : "",
     backgroundColor: isHomepage
       ? timeToChange
         ? "#ffffff"
