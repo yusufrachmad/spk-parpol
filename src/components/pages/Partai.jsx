@@ -63,7 +63,7 @@ const Partai = () => {
   useEffect(() => {
     setImage(images);
     setLink(links);
-  });
+  }, [images, links]);
 
   return (
     <div
