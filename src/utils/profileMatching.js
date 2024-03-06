@@ -1,44 +1,28 @@
 import { supabase } from './supabaseClient.js';
 
-
-// Define a function to calculate the gap
 const calculateGap = (data, target) => {
-    // Array kosong untuk menyimpan gap
     const gap = [];
-
-    // Variabel untuk menyimpan profil id
     let currentProfil = null;
-
-    // Objek kosong untuk menyimpan data sementara
     let temp = {};
 
     for (const profileData of data) {
-        // Cek apakah profil id saat ini sama dengan index saat ini
         if (profileData.id_profil !== currentProfil) {
-            // Cek apakah objek temp tidak kosong
             if (Object.keys(temp).length > 0) {
-                // Masukkan objek temp ke array gap
                 gap.push(temp);
             }
             temp = {};
             currentProfil = profileData.id_profil;
         }
-        // Ambil kode dan value dari profil data
+
         const { kode, value } = profileData;
-        // Ambil gap dengan mengurangi value dengan profil preferensi
         const result = value - target[kode];
-        // Format hasil gap menjadi 3 angka di belakang koma
         const formattedResult = parseFloat(result.toFixed(3));
-        // Masukkan hasil gap ke objek temp
         temp[kode] = formattedResult;
     }
-    // Cek apakah objek temp tidak kosong
     if (Object.keys(temp).length > 0) {
-        // Masukkan objek temp ke array gap
         gap.push(temp);
     }
 
-    // Return array gap
     return gap;
 };
 
@@ -132,6 +116,7 @@ const calculateTotalValue = (group) => {
         })
         return result.push(temp);
     })
+
     return result;
 }
 

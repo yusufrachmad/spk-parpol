@@ -88,6 +88,7 @@ const antiIdealSolution = (weightedNormalized, totalCriteria) => {
         const min = Math.min(...temp);
         antiIdealSolution.push(min);
     }
+
     return antiIdealSolution;
 };
 
@@ -129,5 +130,6 @@ const calculatePreference = (distance, data) => {
 
 const sortRanking = (preference) => {
     const result = preference.sort((a, b) => b.nilai_preferensi - a.nilai_preferensi);
+
     return result;
 };
