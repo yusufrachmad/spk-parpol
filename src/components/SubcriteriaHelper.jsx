@@ -15,7 +15,7 @@ const SubcriteriaHelper = ({ deskripsi }) => {
       setTrigger("click");
     } else {
       setPlacement("right");
-      setTrigger("hover");
+      setTrigger(["hover", "focus"]);
     }
   });
 

@@ -526,7 +526,6 @@ const Subkriteria = () => {
     id_profil: "",
     value: {},
   });
-
   const handleInsertChange = (event) => {
     const { name, value } = event.target;
     let updatedValue = value;
@@ -535,11 +534,8 @@ const Subkriteria = () => {
       updatedValue = parseInt(value);
     }
 
-    // Check if the changed input corresponds to a party's value
-    const isPartyValue = Object.keys(formInsertData).includes("value");
-
     setFormInsertData((prevFormData) => {
-      if (isPartyValue) {
+      if (!isNaN(parseInt(name))) {
         const updatedPartyValues = {
           ...prevFormData,
           value: {
@@ -591,7 +587,7 @@ const Subkriteria = () => {
       setSetUpdate(false);
     }
   };
-  console.log(formInsertData);
+
   const handleUpdate = async (subKriteriaId) => {
     try {
       const { error } = await supabase
